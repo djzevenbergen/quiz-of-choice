@@ -5,17 +5,13 @@ import { useFirestore } from 'react-redux-firebase'
 
 function NewQuizForm(props) {
 
-  // We add the useFirestore() hook to make Firestore available to our component. (Make sure it lives *inside* the NewQuizForm component.)
   const firestore = useFirestore();
 
-  // Note that we updated the name of the function for adding a Quiz to addQuizToFirestore. This is a more accurate name for what the function will do now.
   function addQuizToFirestore(event) {
     event.preventDefault();
 
-    // We will still need our onNewQuizCreation() method to toggle between components - but it will no longer take an argument because it no longer handles creating a Quiz.
     props.onNewQuizCreation();
 
-    // Here's how we will actually add a quiz to Firestore.
 
     return firestore.collection('quizzes').add(
       {

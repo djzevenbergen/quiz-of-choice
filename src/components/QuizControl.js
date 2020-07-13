@@ -58,13 +58,11 @@ class QuizControl extends React.Component {
     }
   }
 
-  handleAddingNewQuizToList = (newQuiz) => {
+  handleAddingNewQuizToList = () => {
     const { dispatch } = this.props;
     const action2 = a.toggleForm();
     dispatch(action2);
   }
-
-
 
   handleChangingSelectedQuiz = (id) => {
     this.props.firestore.get({ collection: 'quizzes', doc: id }).then((quiz) => {
