@@ -2,30 +2,29 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
 
-### `npm test`
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBo_g53_BsOgETNiYngwuFW_-N79f-efBQ",
+    authDomain: "quiz-of-choice-85d0a.firebaseapp.com",
+    databaseURL: "https://quiz-of-choice-85d0a.firebaseio.com",
+    projectId: "quiz-of-choice-85d0a",
+    storageBucket: "quiz-of-choice-85d0a.appspot.com",
+    messagingSenderId: "501771601542",
+    appId: "1:501771601542:web:71be04ab7f6c4314567307"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run eject`
 

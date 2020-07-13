@@ -5,7 +5,6 @@ import QuizDetail from './QuizDetail';
 import EditQuizForm from './EditQuizForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import * as a from './../actions';
 import { withFirestore } from 'react-redux-firebase'
 
 class QuizControl extends React.Component {
@@ -14,7 +13,8 @@ class QuizControl extends React.Component {
     super(props);
     this.state = {
       selectedQuiz: null,
-      editing: false
+      editing: false,
+      formVisibleOnPage: false
     };
   }
 
@@ -25,25 +25,6 @@ class QuizControl extends React.Component {
     });
   }
 
-  /* componentDidMount() {
-     this.waitTimeUpdateTimer = setInterval(() =>
-       this.updateQuizElapsedWaitTime(),
-       60000
-     );
-   }
- 
-   componentWillUnmount() {
-     clearInterval(this.waitTimeUpdateTimer);
-   }
- 
-   updateQuizElapsedWaitTime = () => {
-     const { dispatch } = this.props;
-     Object.values(this.props.masterQuizList).forEach(quiz => {
-       const newFormattedWaitTime = quiz.timeOpen.fromNow(true);
-       const action = a.updateTime(quiz.id, newFormattedWaitTime);
-       dispatch(action);
-     });
-}*/
 
   handleClick = () => {
     if (this.state.selectedQuiz != null) {
@@ -52,16 +33,21 @@ class QuizControl extends React.Component {
         editing: false
       });
     } else {
-      const { dispatch } = this.props;
-      const action = a.toggleForm();
-      dispatch(action);
+      console.log("hi there, i'm form visible:" + this.state.formVisibleOnPage);
+      this.setState(prevState => ({ formVisibleOnPage: !prevState.formVisibleOnPage }));
+      console.log("hi there, i'm form visible:" + this.state.formVisibleOnPage);
+
+      // const { dispatch } = this.props;
+      // const action = a.toggleForm();
+      // dispatch(action);
     }
   }
 
   handleAddingNewQuizToList = () => {
-    const { dispatch } = this.props;
-    const action2 = a.toggleForm();
-    dispatch(action2);
+    // const { dispatch } = this.props;
+    // const action2 = a.toggleForm();
+    // dispatch(action2);
+    this.setState({ formVisibleOnPage: !this.state.formVisibleOnPage });
   }
 
   handleChangingSelectedQuiz = (id) => {
@@ -70,10 +56,34 @@ class QuizControl extends React.Component {
         names: quiz.get("name"),
         username: quiz.get("username"),
         q1: quiz.get("q1"),
+        q1a: quiz.get("q1a"),
+        q1b: quiz.get("q1b"),
+        q1c: quiz.get("q1c"),
+        q1d: quiz.get("q1d"),
+
         q2: quiz.get("q2"),
+        q2a: quiz.get("q2a"),
+        q2b: quiz.get("q2b"),
+        q2c: quiz.get("q2c"),
+        q2d: quiz.get("q2d"),
+
         q3: quiz.get("q3"),
+        q3a: quiz.get("q3a"),
+        q3b: quiz.get("q3b"),
+        q3c: quiz.get("q3c"),
+        q3d: quiz.get("q3d"),
+
         q4: quiz.get("q4"),
+        q4a: quiz.get("q4a"),
+        q4b: quiz.get("q4b"),
+        q4c: quiz.get("q4c"),
+        q4d: quiz.get("q4d"),
+
         q5: quiz.get("q5"),
+        q5a: quiz.get("q5a"),
+        q5b: quiz.get("q5b"),
+        q5c: quiz.get("q5c"),
+        q5d: quiz.get("q5d"),
         id: quiz.id
       }
       this.setState({ selectedQuiz: firestoreQuiz });
@@ -104,11 +114,11 @@ class QuizControl extends React.Component {
           onClickingDelete={this.handleDeletingQuiz}
           onClickingEdit={this.handleEditClick} />
       buttonText = "Return to Quiz List";
-    } else if (this.props.formVisibleOnPage) {
+    } else if (this.state.formVisibleOnPage) {
       currentlyVisibleState = <NewQuizForm onNewQuizCreation={this.handleAddingNewQuizToList} />;
       buttonText = "Return to Quiz List";
     } else {
-      currentlyVisibleState = <QuizList quizList={this.props.masterQuizList} onQuizSelection={this.handleChangingSelectedQuiz} />;
+      currentlyVisibleState = <QuizList onQuizSelection={this.handleChangingSelectedQuiz} />;
       buttonText = "Add Quiz";
     }
     return (
@@ -134,7 +144,7 @@ const mapStateToProps = state => {
 
 QuizControl = connect(mapStateToProps)(QuizControl);
 export default withFirestore(QuizControl);
-export default QuizControl;
+
 
 
 

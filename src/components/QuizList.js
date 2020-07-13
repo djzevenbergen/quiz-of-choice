@@ -12,22 +12,25 @@ function QuizList(props) {
     { collection: 'quizzes' }
   ]);
 
-  const Quizs = useSelector(state => state.firestore.ordered.quizzes);
+  const Quizzes = useSelector(state => state.firestore.ordered.quizzes);
 
 
-  if (isLoaded(quizzes)) {
+  if (isLoaded(Quizzes)) {
     return (
       <React.Fragment>
 
-        {quizzes.map((quiz) => {
+        {Quizzes.map((quiz) => {
           return <Quiz
             whenQuizClicked={props.onQuizSelection}
-            names={quiz.names}
-            location={quiz.location}
-            issue={quiz.issue}
-            formattedWaitTime={quiz.formattedWaitTime}
-            id={quiz.id}
-            key={quiz.id} />
+            name={quiz.name}
+            username={quiz.username}
+            q1={quiz.q1}
+            q1a={quiz.q1a}
+            q2={quiz.q2}
+            q3={quiz.q3}
+            q4={quiz.q4}
+            q5={quiz.q5}
+            id={quiz.id} />
         })}
       </React.Fragment>
     );
