@@ -11,7 +11,9 @@ The user to create, update, delete and take quizzes. All results and created qui
 
 ## Component Diagram
 
-<img src='./public/componentDiagram.drawio.png'>
+<img src='\public\componentDiagram.drawio.png'>
+
+<hr/>
 
 ## Logistics
 
@@ -70,6 +72,8 @@ If you have a bug or an idea, browse the open issues before opening a new one. Y
 - HTML
 - CSS
 - Git
+
+<hr/>
 
 ## Legal
 
