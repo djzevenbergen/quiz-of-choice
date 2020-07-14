@@ -2,16 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useFirestore } from "react-redux-firebase";
 import { auth } from "firebase";
+import Quiz from "./Quiz";
 
 function SubmitQuiz(props) {
-  const { quiz, onClickingDelete } = props;
+  const { quiz, onClickingDelete, onClickingEdit } = props;
 
   const firestore = useFirestore();
   function addAnswersToFirestore(event) {
     event.preventDefault();
-    console.log(quiz.names);
+    console.log(Quiz);
 
-    // props.onSubmit();
     const answersToAdd = {
       name: quiz.names,
       author: quiz.username,
@@ -21,8 +21,8 @@ function SubmitQuiz(props) {
       answer3: event.target.q3.value,
       answer4: event.target.q4.value,
       answer5: event.target.q5.value
-
     }
+
     console.table(answersToAdd);
 
     return firestore.collection('answers').add(answersToAdd);
@@ -88,7 +88,7 @@ function SubmitQuiz(props) {
 
           <button type='submit'>Submit</button>
         </form>
-        <button onClick={props.onClickingEdit}>Update quiz</button>
+        <button onClick={() => onClickingEdit()}>Update quiz</button>
         <button onClick={() => onClickingDelete(quiz.id)}>Close quiz</button>
         <hr />
 
