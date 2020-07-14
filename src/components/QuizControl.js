@@ -129,7 +129,7 @@ class QuizControl extends React.Component {
     if ((isLoaded(auth)) && (auth.currentUser != null)) {
 
       if (this.state.dashBoardVisible) {
-        currentlyVisibleState = <QuizDashboard auth={this.props.firebase.auth()} onQuizSelection={this.handleChangingSelectedQuiz} />;
+        currentlyVisibleState = <QuizDashboard auth={this.props.firebase.auth()} onQuizSelection={this.handleChangingSelectedQuiz} />
         buttonText = "Back to Quiz List";
         dashText = "Back to text";
       } else if (this.state.editing) {

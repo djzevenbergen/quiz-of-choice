@@ -14,8 +14,8 @@ function Quiz(props) {
 }
 
 Quiz.propTypes = {
-  name: PropTypes.string.isRequired,
-  username: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  username: PropTypes.string,
   id: PropTypes.string,
   whenQuizClicked: PropTypes.func
 };
