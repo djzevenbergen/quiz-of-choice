@@ -16,6 +16,7 @@ function NewQuizForm(props) {
     return firestore.collection('quizzes').add(
       {
         name: event.target.name.value,
+        userEmail: props.auth.currentUser.email,
         username: event.target.username.value,
         q1: event.target.q1.value,
         q1a: event.target.q1a.value,
@@ -58,6 +59,7 @@ function NewQuizForm(props) {
 }
 
 NewQuizForm.propTypes = {
+  auth: PropTypes.object,
   onNewQuizCreation: PropTypes.func
 };
 

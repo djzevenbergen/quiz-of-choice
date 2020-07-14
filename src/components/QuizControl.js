@@ -1,12 +1,12 @@
 import React from 'react';
 import NewQuizForm from './NewQuizForm';
 import QuizList from './QuizList';
-import QuizDetail from './QuizDetail';
+import SubmitQuiz from './SubmitQuiz';
 import EditQuizForm from './EditQuizForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import { withFirestore } from 'react-redux-firebase';
-import { withFirestore, isLoaded } from 'react-router-dom';
+import { withFirestore, isLoaded } from 'react-redux-firebase';
+
 
 class QuizControl extends React.Component {
 
@@ -38,16 +38,15 @@ class QuizControl extends React.Component {
       this.setState(prevState => ({ formVisibleOnPage: !prevState.formVisibleOnPage }));
       console.log("hi there, i'm form visible:" + this.state.formVisibleOnPage);
 
-      // const { dispatch } = this.props;
-      // const action = a.toggleForm();
-      // dispatch(action);
+
     }
   }
 
   handleAddingNewQuizToList = () => {
-    // const { dispatch } = this.props;
-    // const action2 = a.toggleForm();
-    // dispatch(action2);
+    this.setState({ formVisibleOnPage: !this.state.formVisibleOnPage });
+  }
+
+  handleSubmittingQuiz = () => {
     this.setState({ formVisibleOnPage: !this.state.formVisibleOnPage });
   }
 
@@ -56,6 +55,7 @@ class QuizControl extends React.Component {
       const firestoreQuiz = {
         names: quiz.get("name"),
         username: quiz.get("username"),
+        userEmail: quiz.get("userEmail"),
         q1: quiz.get("q1"),
         q1a: quiz.get("q1a"),
         q1b: quiz.get("q1b"),
@@ -128,13 +128,15 @@ class QuizControl extends React.Component {
         buttonText = "Return to Quiz List";
       } else if (this.state.selectedQuiz != null) {
         currentlyVisibleState =
-          <QuizDetail
+          <SubmitQuiz
+            auth={this.props.firebase.auth()}
             quiz={this.state.selectedQuiz}
+            onQuizSubmission={this.handleSubmittingQuiz}
             onClickingDelete={this.handleDeletingQuiz}
             onClickingEdit={this.handleEditClick} />
         buttonText = "Return to Quiz List";
       } else if (this.state.formVisibleOnPage) {
-        currentlyVisibleState = <NewQuizForm onNewQuizCreation={this.handleAddingNewQuizToList} />;
+        currentlyVisibleState = <NewQuizForm auth={this.props.firebase.auth()} onNewQuizCreation={this.handleAddingNewQuizToList} />;
         buttonText = "Return to Quiz List";
       } else {
         currentlyVisibleState = <QuizList onQuizSelection={this.handleChangingSelectedQuiz} />;

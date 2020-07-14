@@ -16,6 +16,9 @@ function ReusableForm(props) {
               type='text'
               name='username'
               placeholder='Your Name' />
+            {/* <input
+            type='hidden'
+            name='currentUser' /> */}
             <ul>
               <li>
                 <input

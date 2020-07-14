@@ -14,7 +14,7 @@ function SignIn() {
         console.log(error.message);
       });
     } else {
-      <p>Please verify your confirm password matches</p>
+      alert("Please make sure your passwords match");
     }
   }
 

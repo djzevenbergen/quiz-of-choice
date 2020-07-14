@@ -2,7 +2,7 @@ import React from "react";
 import Header from "./Header";
 import QuizControl from "./QuizControl";
 import SignIn from './SignIn';
-import { BrowswerRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
