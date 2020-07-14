@@ -30,7 +30,8 @@ function QuizList(props) {
             q3={quiz.q3}
             q4={quiz.q4}
             q5={quiz.q5}
-            id={quiz.id} />
+            id={quiz.id}
+            key={quiz.id} />
         })}
       </React.Fragment>
     );

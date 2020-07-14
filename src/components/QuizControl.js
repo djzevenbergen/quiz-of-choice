@@ -39,9 +39,11 @@ class QuizControl extends React.Component {
       console.log("hi there, i'm form visible:" + this.state.formVisibleOnPage);
       this.setState(prevState => ({ formVisibleOnPage: !prevState.formVisibleOnPage }));
       console.log("hi there, i'm form visible:" + this.state.formVisibleOnPage);
-
-
     }
+  }
+
+  handleDashboardClick = () => {
+    this.setState(prevState => ({ dashBoardVisible: !prevState.dashBoardVisible }))
   }
 
   handleAddingNewQuizToList = () => {
@@ -107,6 +109,7 @@ class QuizControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
+    let dashText = null;
     const auth = this.props.firebase.auth();
 
     if (!isLoaded(auth)) {
@@ -125,9 +128,14 @@ class QuizControl extends React.Component {
     }
     if ((isLoaded(auth)) && (auth.currentUser != null)) {
 
-      if (this.state.editing) {
+      if (this.state.dashBoardVisible) {
+        currentlyVisibleState = <QuizDashboard auth={this.props.firebase.auth()} onQuizSelection={this.handleChangingSelectedQuiz} />;
+        buttonText = "Back to Quiz List";
+        dashText = "Back to text";
+      } else if (this.state.editing) {
         currentlyVisibleState = <EditQuizForm quiz={this.state.selectedQuiz} onEditQuiz={this.handleEditingQuizInList} />
         buttonText = "Return to Quiz List";
+        dashText = "See Your Dashboard";
       } else if (this.state.selectedQuiz != null) {
         currentlyVisibleState =
           <SubmitQuiz
@@ -137,20 +145,22 @@ class QuizControl extends React.Component {
             onClickingDelete={this.handleDeletingQuiz}
             onClickingEdit={this.handleEditClick} />
         buttonText = "Return to Quiz List";
+        dashText = "See Your Dashboard";
       } else if (this.state.formVisibleOnPage) {
         currentlyVisibleState = <NewQuizForm auth={this.props.firebase.auth()} onNewQuizCreation={this.handleAddingNewQuizToList} />;
         buttonText = "Return to Quiz List";
-      } else if (this.state.dashboardVisible) {
-        currentlyVisibleState = <QuizDashboard onQuizSelection={this.handleChangingSelectedQuiz} />;
-        buttonText = "Back to Quiz List";
+        dashText = "See Your Dashboard";
       } else {
         currentlyVisibleState = <QuizList onQuizSelection={this.handleChangingSelectedQuiz} />;
         buttonText = "Add Quiz";
+        dashText = "See Your Dashboard";
       }
       return (
         <React.Fragment>
           {currentlyVisibleState}
           <button onClick={this.handleClick}>{buttonText}</button>
+          <button onClick={this.handleDashboardClick}>{dashText}</button>
+
         </React.Fragment>
       );
     }
