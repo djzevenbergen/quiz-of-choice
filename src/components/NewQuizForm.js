@@ -9,9 +9,7 @@ function NewQuizForm(props) {
 
   function addQuizToFirestore(event) {
     event.preventDefault();
-
     props.onNewQuizCreation();
-
 
     return firestore.collection('quizzes').add(
       {
