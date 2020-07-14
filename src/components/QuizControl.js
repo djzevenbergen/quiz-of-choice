@@ -2,6 +2,7 @@ import React from 'react';
 import NewQuizForm from './NewQuizForm';
 import QuizList from './QuizList';
 import SubmitQuiz from './SubmitQuiz';
+import QuizDashboard from './QuizDashboard';
 import EditQuizForm from './EditQuizForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
@@ -15,7 +16,8 @@ class QuizControl extends React.Component {
     this.state = {
       selectedQuiz: null,
       editing: false,
-      formVisibleOnPage: false
+      formVisibleOnPage: false,
+      dashBoardVisible: false
     };
   }
 
@@ -138,6 +140,9 @@ class QuizControl extends React.Component {
       } else if (this.state.formVisibleOnPage) {
         currentlyVisibleState = <NewQuizForm auth={this.props.firebase.auth()} onNewQuizCreation={this.handleAddingNewQuizToList} />;
         buttonText = "Return to Quiz List";
+      } else if (this.state.dashboardVisible) {
+        currentlyVisibleState = <QuizDashboard onQuizSelection={this.handleChangingSelectedQuiz} />;
+        buttonText = "Back to Quiz List";
       } else {
         currentlyVisibleState = <QuizList onQuizSelection={this.handleChangingSelectedQuiz} />;
         buttonText = "Add Quiz";
