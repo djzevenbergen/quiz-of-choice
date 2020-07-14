@@ -5,7 +5,8 @@ import QuizDetail from './QuizDetail';
 import EditQuizForm from './EditQuizForm';
 import { connect } from 'react-redux';
 import PropTypes from "prop-types";
-import { withFirestore } from 'react-redux-firebase'
+import { withFirestore } from 'react-redux-firebase';
+import { withFirestore, isLoaded } from 'react-router-dom';
 
 class QuizControl extends React.Component {
 
@@ -104,31 +105,49 @@ class QuizControl extends React.Component {
   render() {
     let currentlyVisibleState = null;
     let buttonText = null;
-    if (this.state.editing) {
-      currentlyVisibleState = <EditQuizForm quiz={this.state.selectedQuiz} onEditQuiz={this.handleEditingQuizInList} />
-      buttonText = "Return to Quiz List";
-    } else if (this.state.selectedQuiz != null) {
-      currentlyVisibleState =
-        <QuizDetail
-          quiz={this.state.selectedQuiz}
-          onClickingDelete={this.handleDeletingQuiz}
-          onClickingEdit={this.handleEditClick} />
-      buttonText = "Return to Quiz List";
-    } else if (this.state.formVisibleOnPage) {
-      currentlyVisibleState = <NewQuizForm onNewQuizCreation={this.handleAddingNewQuizToList} />;
-      buttonText = "Return to Quiz List";
-    } else {
-      currentlyVisibleState = <QuizList onQuizSelection={this.handleChangingSelectedQuiz} />;
-      buttonText = "Add Quiz";
-    }
-    return (
-      <React.Fragment>
-        {currentlyVisibleState}
-        <button onClick={this.handleClick}>{buttonText}</button>
-      </React.Fragment>
-    );
-  }
+    const auth = this.props.firebase.auth();
 
+    if (!isLoaded(auth)) {
+      return (
+        <React.Fragment>
+          <h1>Loading...</h1>
+        </React.Fragment>
+      )
+    }
+    if ((isLoaded(auth)) && (auth.currentUser == null)) {
+      return (
+        <React.Fragment>
+          <h1>You must be signed in to access the queue.</h1>
+        </React.Fragment>
+      )
+    }
+    if ((isLoaded(auth)) && (auth.currentUser != null)) {
+
+      if (this.state.editing) {
+        currentlyVisibleState = <EditQuizForm quiz={this.state.selectedQuiz} onEditQuiz={this.handleEditingQuizInList} />
+        buttonText = "Return to Quiz List";
+      } else if (this.state.selectedQuiz != null) {
+        currentlyVisibleState =
+          <QuizDetail
+            quiz={this.state.selectedQuiz}
+            onClickingDelete={this.handleDeletingQuiz}
+            onClickingEdit={this.handleEditClick} />
+        buttonText = "Return to Quiz List";
+      } else if (this.state.formVisibleOnPage) {
+        currentlyVisibleState = <NewQuizForm onNewQuizCreation={this.handleAddingNewQuizToList} />;
+        buttonText = "Return to Quiz List";
+      } else {
+        currentlyVisibleState = <QuizList onQuizSelection={this.handleChangingSelectedQuiz} />;
+        buttonText = "Add Quiz";
+      }
+      return (
+        <React.Fragment>
+          {currentlyVisibleState}
+          <button onClick={this.handleClick}>{buttonText}</button>
+        </React.Fragment>
+      );
+    }
+  }
 }
 
 QuizControl.propTypes = {
@@ -143,6 +162,7 @@ const mapStateToProps = state => {
 }
 
 QuizControl = connect(mapStateToProps)(QuizControl);
+
 export default withFirestore(QuizControl);
 
 
